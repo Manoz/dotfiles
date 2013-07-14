@@ -147,6 +147,10 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
+# Misc stuff
+alias h='history'
+alias clr='clear'
+
 # =Misc stuff
 ###############################################################
 
