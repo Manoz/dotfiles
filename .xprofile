@@ -1,0 +1,10 @@
+export UNITY_LOW_GFX_MODE=1
+
+xrandr --output LVDS1 --mode 1366x768 --rate 60
+xrandr --output VGA1 --mode 1680x1050 --rate 60
+
+#Laptop left extra Monitor right
+xrandr --output LVDS1 --left-of VGA1
+
+#Sets my VGA monitor as my primary monitor.
+xrandr --output VGA1 --primary
