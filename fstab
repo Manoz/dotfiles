@@ -1,0 +1,3 @@
+//mafreebox.freebox.fr/Disque\040dur /media/freebox cifs _netdev,rw,users,iocharset=utf8,uid=1000,sec=none,file_mode=0777,dir_mode=0777 0 0
+# Partitions Windows - NTFS
+/dev/sda3    /winpartoche    ntfs-3g     rw,user,auto,gid=100,uid=1000,nls=utf8,umask=002    0   0
