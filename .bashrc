@@ -114,8 +114,8 @@ if ! shopt -oq posix; then
 fi
 
 # Time to customize this freackin bashrc <3
-PS1='\[\033[01;32m\]\u\[\033[01;34m\]::\[\033[01;31m\]\h \[\033[00;34m\]{ \[\033[01;34m\]\w \[\033[00;34m\]}\[\033[01;32m\]-> \[\033[00m\]'
-
+# username::computer-name { directory basename } newline ->
+PS1="\[\e[01;36m\]\u\[\e[0m\]\[\e[01;34m\]::\[\e[0m\]\[\e[01;31m\]\h\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;37m\]{\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;33m\]\W\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;37m\]}\[\e[0m\]\[\e[00;37m\]\n\[\e[0m\]\[\e[01;37m\]->\[\e[0m\]\[\e[00;37m\] \[\e[0m\]"
 
 # =Custom aliases by Manoz
 ###############################################################
@@ -154,7 +154,7 @@ alias clr='clear'
 # =Misc stuff
 ###############################################################
 
-# Funny completion 
+# Funny completion
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
