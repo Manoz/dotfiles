@@ -2,6 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+source ~/git-prompt.sh
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -43,7 +45,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -115,9 +117,13 @@ fi
 
 # Time to customize this freackin bashrc <3
 # username::computer-name { directory basename } newline ->
-PS1="\[\e[01;36m\]\u\[\e[0m\]\[\e[01;34m\]::\[\e[0m\]\[\e[01;31m\]\h\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;37m\]{\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;33m\]\W\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;37m\]}\[\e[0m\]\[\e[00;37m\]\n\[\e[0m\]\[\e[01;37m\]->\[\e[0m\]\[\e[00;37m\] \[\e[0m\]"
+#PS1="\[\e[01;36m\]\u\[\e[0m\]\[\e[01;34m\]::\[\e[0m\]\[\e[01;31m\]\h\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;37m\]{\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;33m\]\W\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;37m\]}\[\e[0m\]\[\e[00;37m\]\n\[\e[0m\]\[\e[01;37m\]->\[\e[0m\]\[\e[00;37m\] \[\e[0m\]"
+#PS1='\[\033[01;36m\]\u\[\033[01;34m\]::\[\033[01;31m\]\h \[\033[00;34m\]{ \[\033[01;34m\]\w \[\033[00;34m\]}\[\033[01;37m\]-> \[\033[00m\]'
+#PS1="\[\e[01;36m\]\u\[\e[0m\]\[\e[01;34m\]::\[\e[0m\]\[\e[01;31m\]\h\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;37m\]{\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;33m\]\W\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;37m\]}\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;37m\]->\[\e[0m\]\[\e[00;37m\] \[\e[0m\]"
+#PS1="\[\e[1;32m\]\u\[\e[0m\]\[\e[0;33m\]::\[\e[0m\]\[\e[01;31m\]\h\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[0;36m\]{\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[01;33m\]\W\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[0;36m\]}\[\e[0m\]\[\e[00;37m\]\n\[\e[0m\]\[\e[0;30m\]->\[\e[0m\]\[\e[00;37m\] \[\e[0m\]"
+PS1='\[\033[1;35m\]\t\[\033[0;36m\]::\[\033[1;31m\]\u \[\033[0;36m\]{ \[\033[01;34m\]\w \[\033[0;36m\]} $(__git_ps1 "{ \[\033[01;34m\]%s \[\033[0;36m\]}") \n\[\033[1;35m\]-> $ \[\033[0;30m\]'
 
-# =Custom aliases by Manoz
+# =Custom aliases
 ###############################################################
 
 # ls stuff
@@ -125,8 +131,7 @@ eval "`dircolors -b`"
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias ll="ls -l"
-alias la="ls -A"
-alias lla="ls -al"
+alias lla="ls -l -h"
 
 # Fat hand
 alias cd..='cd ..'
@@ -150,6 +155,12 @@ alias ....='cd ../../..'
 # Misc stuff
 alias h='history'
 alias clr='clear'
+alias synaptic='sudo synaptic'
+alias rsapache='sudo /etc/init.d/apache2 force-reload'
+
+# Panning for my fucking laptop when needed :/
+alias pannon='xrandr --output LVDS1 --panning 1366x1050'
+alias pannoff='xrandr --output LVDS1 --panning 1366x768'
 
 # =Misc stuff
 ###############################################################
@@ -233,3 +244,37 @@ On_IBlue='\[\e[0;104m\]'    # Blue
 On_IPurple='\[\e[10;105m\]'  # Purple
 On_ICyan='\[\e[0;106m\]'    # Cyan
 On_IWhite='\[\e[0;107m\]'   # White
+
+# HR for Terminal
+COLS="$(tput cols)"
+if (( COLS <= 0 )) ; then
+    COLS="${COLUMNS:-80}"
+fi
+
+hr() {
+    local WORD="$1"
+    if [[ -n "$WORD" ]] ; then
+        local LINE=''
+        while (( ${#LINE} < COLS ))
+        do
+            LINE="$LINE$WORD"
+        done
+
+        echo "${LINE:0:$COLS}"
+    fi
+}
+
+hrs() {
+    local WORD
+
+    for WORD in "${@:-#}"
+    do
+        hr "$WORD"
+    done
+}
+
+[ "$0" == "$BASH_SOURCE" ] && hrs "$@"
+
+coucou() {
+    echo "Wesh, World!"
+}
